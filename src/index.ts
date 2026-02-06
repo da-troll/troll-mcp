@@ -34,7 +34,7 @@ server.tool(
   "List all code snippets",
   { limit: z.number().optional().describe("Maximum number of snippets to return") },
   async ({ limit }) => {
-    const { data, error } = await client.GET("/api/v1/snippets", {
+    const { data, error } = await client.GET("/v1/snippets", {
       params: { query: { limit } },
     });
     return error ? err(error) : ok(data);
@@ -46,7 +46,7 @@ server.tool(
   "Get a code snippet by ID",
   { id: z.string().describe("Snippet ID") },
   async ({ id }) => {
-    const { data, error } = await client.GET("/api/v1/snippets/{id}", {
+    const { data, error } = await client.GET("/v1/snippets/{id}", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);
@@ -64,7 +64,7 @@ server.tool(
     tags: z.array(z.string()).optional().describe("Tags for categorization"),
   },
   async (params) => {
-    const { data, error } = await client.POST("/api/v1/snippets", {
+    const { data, error } = await client.POST("/v1/snippets", {
       body: params,
     });
     return error ? err(error) : ok(data);
@@ -83,7 +83,7 @@ server.tool(
     tags: z.array(z.string()).optional().describe("New tags"),
   },
   async ({ id, ...body }) => {
-    const { data, error } = await client.PUT("/api/v1/snippets/{id}", {
+    const { data, error } = await client.PUT("/v1/snippets/{id}", {
       params: { path: { id } },
       body,
     });
@@ -96,7 +96,7 @@ server.tool(
   "Delete a code snippet",
   { id: z.string().describe("Snippet ID") },
   async ({ id }) => {
-    const { data, error } = await client.DELETE("/api/v1/snippets/{id}", {
+    const { data, error } = await client.DELETE("/v1/snippets/{id}", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);
@@ -112,7 +112,7 @@ server.tool(
   "List all knowledge nuggets",
   { limit: z.number().optional().describe("Maximum number of nuggets to return") },
   async ({ limit }) => {
-    const { data, error } = await client.GET("/api/v1/nuggets", {
+    const { data, error } = await client.GET("/v1/nuggets", {
       params: { query: { limit } },
     });
     return error ? err(error) : ok(data);
@@ -124,7 +124,7 @@ server.tool(
   "Get a knowledge nugget by ID",
   { id: z.string().describe("Nugget ID") },
   async ({ id }) => {
-    const { data, error } = await client.GET("/api/v1/nuggets/{id}", {
+    const { data, error } = await client.GET("/v1/nuggets/{id}", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);
@@ -140,7 +140,7 @@ server.tool(
     content: z.string().describe("Nugget content"),
   },
   async (params) => {
-    const { data, error } = await client.POST("/api/v1/nuggets", {
+    const { data, error } = await client.POST("/v1/nuggets", {
       body: params,
     });
     return error ? err(error) : ok(data);
@@ -157,7 +157,7 @@ server.tool(
     content: z.string().optional().describe("New content"),
   },
   async ({ id, ...body }) => {
-    const { data, error } = await client.PUT("/api/v1/nuggets/{id}", {
+    const { data, error } = await client.PUT("/v1/nuggets/{id}", {
       params: { path: { id } },
       body,
     });
@@ -170,7 +170,7 @@ server.tool(
   "Delete a knowledge nugget",
   { id: z.string().describe("Nugget ID") },
   async ({ id }) => {
-    const { data, error } = await client.DELETE("/api/v1/nuggets/{id}", {
+    const { data, error } = await client.DELETE("/v1/nuggets/{id}", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);
@@ -186,7 +186,7 @@ server.tool(
   "List all todo lists",
   { limit: z.number().optional().describe("Maximum number of todos to return") },
   async ({ limit }) => {
-    const { data, error } = await client.GET("/api/v1/todos", {
+    const { data, error } = await client.GET("/v1/todos", {
       params: { query: { limit } },
     });
     return error ? err(error) : ok(data);
@@ -198,7 +198,7 @@ server.tool(
   "Get a todo list by ID",
   { id: z.string().describe("Todo ID") },
   async ({ id }) => {
-    const { data, error } = await client.GET("/api/v1/todos/{id}", {
+    const { data, error } = await client.GET("/v1/todos/{id}", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);
@@ -214,7 +214,7 @@ server.tool(
     content: z.string().describe("Todo content (markdown checklist)"),
   },
   async (params) => {
-    const { data, error } = await client.POST("/api/v1/todos", {
+    const { data, error } = await client.POST("/v1/todos", {
       body: params,
     });
     return error ? err(error) : ok(data);
@@ -231,7 +231,7 @@ server.tool(
     content: z.string().optional().describe("New content"),
   },
   async ({ id, ...body }) => {
-    const { data, error } = await client.PUT("/api/v1/todos/{id}", {
+    const { data, error } = await client.PUT("/v1/todos/{id}", {
       params: { path: { id } },
       body,
     });
@@ -244,7 +244,7 @@ server.tool(
   "Delete a todo list",
   { id: z.string().describe("Todo ID") },
   async ({ id }) => {
-    const { data, error } = await client.DELETE("/api/v1/todos/{id}", {
+    const { data, error } = await client.DELETE("/v1/todos/{id}", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);
@@ -260,7 +260,7 @@ server.tool(
   "List all ideas",
   { limit: z.number().optional().describe("Maximum number of ideas to return") },
   async ({ limit }) => {
-    const { data, error } = await client.GET("/api/v1/ideas", {
+    const { data, error } = await client.GET("/v1/ideas", {
       params: { query: { limit } },
     });
     return error ? err(error) : ok(data);
@@ -272,7 +272,7 @@ server.tool(
   "Get an idea by ID",
   { id: z.string().describe("Idea ID") },
   async ({ id }) => {
-    const { data, error } = await client.GET("/api/v1/ideas/{id}", {
+    const { data, error } = await client.GET("/v1/ideas/{id}", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);
@@ -287,7 +287,7 @@ server.tool(
     content: z.string().describe("Idea content"),
   },
   async (params) => {
-    const { data, error } = await client.POST("/api/v1/ideas", {
+    const { data, error } = await client.POST("/v1/ideas", {
       body: params,
     });
     return error ? err(error) : ok(data);
@@ -303,7 +303,7 @@ server.tool(
     content: z.string().optional().describe("New content"),
   },
   async ({ id, ...body }) => {
-    const { data, error } = await client.PUT("/api/v1/ideas/{id}", {
+    const { data, error } = await client.PUT("/v1/ideas/{id}", {
       params: { path: { id } },
       body,
     });
@@ -316,7 +316,7 @@ server.tool(
   "Delete an idea",
   { id: z.string().describe("Idea ID") },
   async ({ id }) => {
-    const { data, error } = await client.DELETE("/api/v1/ideas/{id}", {
+    const { data, error } = await client.DELETE("/v1/ideas/{id}", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);
@@ -332,7 +332,7 @@ server.tool(
   "List all software tools and resources",
   { limit: z.number().optional().describe("Maximum number of tools to return") },
   async ({ limit }) => {
-    const { data, error } = await client.GET("/api/v1/tools", {
+    const { data, error } = await client.GET("/v1/tools", {
       params: { query: { limit } },
     });
     return error ? err(error) : ok(data);
@@ -344,7 +344,7 @@ server.tool(
   "Get a software tool by ID",
   { id: z.string().describe("Tool ID") },
   async ({ id }) => {
-    const { data, error } = await client.GET("/api/v1/tools/{id}", {
+    const { data, error } = await client.GET("/v1/tools/{id}", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);
@@ -362,7 +362,7 @@ server.tool(
     rating: z.number().optional().describe("Rating (1-5)"),
   },
   async (params) => {
-    const { data, error } = await client.POST("/api/v1/tools", {
+    const { data, error } = await client.POST("/v1/tools", {
       body: params,
     });
     return error ? err(error) : ok(data);
@@ -381,7 +381,7 @@ server.tool(
     rating: z.number().optional().describe("New rating"),
   },
   async ({ id, ...body }) => {
-    const { data, error } = await client.PUT("/api/v1/tools/{id}", {
+    const { data, error } = await client.PUT("/v1/tools/{id}", {
       params: { path: { id } },
       body,
     });
@@ -394,7 +394,7 @@ server.tool(
   "Delete a software tool entry",
   { id: z.string().describe("Tool ID") },
   async ({ id }) => {
-    const { data, error } = await client.DELETE("/api/v1/tools/{id}", {
+    const { data, error } = await client.DELETE("/v1/tools/{id}", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);
@@ -410,7 +410,7 @@ server.tool(
   "List all git repositories",
   { limit: z.number().optional().describe("Maximum number of repos to return") },
   async ({ limit }) => {
-    const { data, error } = await client.GET("/api/v1/repos", {
+    const { data, error } = await client.GET("/v1/repos", {
       params: { query: { limit } },
     });
     return error ? err(error) : ok(data);
@@ -422,7 +422,7 @@ server.tool(
   "Get a git repository by ID",
   { id: z.string().describe("Repo ID") },
   async ({ id }) => {
-    const { data, error } = await client.GET("/api/v1/repos/{id}", {
+    const { data, error } = await client.GET("/v1/repos/{id}", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);
@@ -440,7 +440,7 @@ server.tool(
     source_type: z.enum(["github", "manual"]).describe("Source type"),
   },
   async (params) => {
-    const { data, error } = await client.POST("/api/v1/repos", {
+    const { data, error } = await client.POST("/v1/repos", {
       body: params,
     });
     return error ? err(error) : ok(data);
@@ -459,7 +459,7 @@ server.tool(
     source_type: z.string().optional().describe("New source type"),
   },
   async ({ id, ...body }) => {
-    const { data, error } = await client.PUT("/api/v1/repos/{id}", {
+    const { data, error } = await client.PUT("/v1/repos/{id}", {
       params: { path: { id } },
       body,
     });
@@ -472,7 +472,7 @@ server.tool(
   "Delete a git repository entry",
   { id: z.string().describe("Repo ID") },
   async ({ id }) => {
-    const { data, error } = await client.DELETE("/api/v1/repos/{id}", {
+    const { data, error } = await client.DELETE("/v1/repos/{id}", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);
@@ -492,7 +492,7 @@ server.tool(
     location_type: z.enum(["country", "city"]).optional().describe("Filter by location type"),
   },
   async (params) => {
-    const { data, error } = await client.GET("/api/v1/travel", {
+    const { data, error } = await client.GET("/v1/travel", {
       params: { query: params },
     });
     return error ? err(error) : ok(data);
@@ -504,7 +504,7 @@ server.tool(
   "Get a travel location by ID",
   { id: z.string().describe("Travel location ID") },
   async ({ id }) => {
-    const { data, error } = await client.GET("/api/v1/travel/{id}", {
+    const { data, error } = await client.GET("/v1/travel/{id}", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);
@@ -524,7 +524,7 @@ server.tool(
     is_favorite: z.boolean().describe("Whether this is a favorite location"),
   },
   async (params) => {
-    const { data, error } = await client.POST("/api/v1/travel", {
+    const { data, error } = await client.POST("/v1/travel", {
       body: params,
     });
     return error ? err(error) : ok(data);
@@ -543,7 +543,7 @@ server.tool(
     is_favorite: z.boolean().optional().describe("New favorite status"),
   },
   async ({ id, ...body }) => {
-    const { data, error } = await client.PUT("/api/v1/travel/{id}", {
+    const { data, error } = await client.PUT("/v1/travel/{id}", {
       params: { path: { id } },
       body,
     });
@@ -556,7 +556,7 @@ server.tool(
   "Remove a travel location",
   { id: z.string().describe("Travel location ID") },
   async ({ id }) => {
-    const { data, error } = await client.DELETE("/api/v1/travel/{id}", {
+    const { data, error } = await client.DELETE("/v1/travel/{id}", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);
@@ -576,7 +576,7 @@ server.tool(
     continent: z.string().optional().describe("Filter by continent"),
   },
   async (params) => {
-    const { data, error } = await client.GET("/api/v1/countries", {
+    const { data, error } = await client.GET("/v1/countries", {
       params: { query: params },
     });
     return error ? err(error) : ok(data);
@@ -588,7 +588,7 @@ server.tool(
   "Get a country by ID",
   { id: z.string().describe("Country ID") },
   async ({ id }) => {
-    const { data, error } = await client.GET("/api/v1/countries/{id}", {
+    const { data, error } = await client.GET("/v1/countries/{id}", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);
@@ -608,7 +608,7 @@ server.tool(
     country_id: z.string().optional().describe("Filter by country ID"),
   },
   async (params) => {
-    const { data, error } = await client.GET("/api/v1/cities", {
+    const { data, error } = await client.GET("/v1/cities", {
       params: { query: params },
     });
     return error ? err(error) : ok(data);
@@ -620,7 +620,7 @@ server.tool(
   "Get a city by ID",
   { id: z.string().describe("City ID") },
   async ({ id }) => {
-    const { data, error } = await client.GET("/api/v1/cities/{id}", {
+    const { data, error } = await client.GET("/v1/cities/{id}", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);
@@ -642,7 +642,7 @@ server.tool(
     billing_cycle: z.enum(["monthly", "yearly"]).optional().describe("Filter by billing cycle"),
   },
   async (params) => {
-    const { data, error } = await client.GET("/api/v1/subscriptions", {
+    const { data, error } = await client.GET("/v1/subscriptions", {
       params: { query: params },
     });
     return error ? err(error) : ok(data);
@@ -654,7 +654,7 @@ server.tool(
   "Get a subscription by ID",
   { id: z.string().describe("Subscription ID") },
   async ({ id }) => {
-    const { data, error } = await client.GET("/api/v1/subscriptions/{id}", {
+    const { data, error } = await client.GET("/v1/subscriptions/{id}", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);
@@ -676,7 +676,7 @@ server.tool(
     usage_type: z.enum(["personal", "work"]).describe("Usage type"),
   },
   async (params) => {
-    const { data, error } = await client.POST("/api/v1/subscriptions", {
+    const { data, error } = await client.POST("/v1/subscriptions", {
       body: params,
     });
     return error ? err(error) : ok(data);
@@ -700,7 +700,7 @@ server.tool(
     status: z.enum(["active", "cancelled"]).optional().describe("New status"),
   },
   async ({ id, ...body }) => {
-    const { data, error } = await client.PUT("/api/v1/subscriptions/{id}", {
+    const { data, error } = await client.PUT("/v1/subscriptions/{id}", {
       params: { path: { id } },
       body,
     });
@@ -713,7 +713,7 @@ server.tool(
   "Delete a subscription (payment history is preserved)",
   { id: z.string().describe("Subscription ID") },
   async ({ id }) => {
-    const { data, error } = await client.DELETE("/api/v1/subscriptions/{id}", {
+    const { data, error } = await client.DELETE("/v1/subscriptions/{id}", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);
@@ -725,7 +725,7 @@ server.tool(
   "Record a payment for the current billing period and advance the next billing date",
   { id: z.string().describe("Subscription ID") },
   async ({ id }) => {
-    const { data, error } = await client.POST("/api/v1/subscriptions/{id}/mark-paid", {
+    const { data, error } = await client.POST("/v1/subscriptions/{id}/mark-paid", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);
@@ -744,7 +744,7 @@ server.tool(
     overwrite_existing: z.boolean().describe("If true, overwrites existing payments for these periods"),
   },
   async ({ id, ...body }) => {
-    const { data, error } = await client.POST("/api/v1/subscriptions/{id}/backfill", {
+    const { data, error } = await client.POST("/v1/subscriptions/{id}/backfill", {
       params: { path: { id } },
       body,
     });
@@ -760,7 +760,7 @@ server.tool(
     limit: z.number().optional().describe("Maximum number of payments to return"),
   },
   async ({ id, limit }) => {
-    const { data, error } = await client.GET("/api/v1/subscriptions/{id}/payments", {
+    const { data, error } = await client.GET("/v1/subscriptions/{id}/payments", {
       params: { path: { id }, query: { limit } },
     });
     return error ? err(error) : ok(data);
@@ -784,7 +784,7 @@ server.tool(
     date_to: z.string().optional().describe("Filter to date (YYYY-MM-DD, inclusive)"),
   },
   async (params) => {
-    const { data, error } = await client.GET("/api/v1/subscription-payments", {
+    const { data, error } = await client.GET("/v1/subscription-payments", {
       params: { query: params },
     });
     return error ? err(error) : ok(data);
@@ -796,7 +796,7 @@ server.tool(
   "Get a subscription payment by ID",
   { id: z.string().describe("Payment ID") },
   async ({ id }) => {
-    const { data, error } = await client.GET("/api/v1/subscription-payments/{id}", {
+    const { data, error } = await client.GET("/v1/subscription-payments/{id}", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);
@@ -816,7 +816,7 @@ server.tool(
     notes: z.string().optional().describe("Payment notes"),
   },
   async (params) => {
-    const { data, error } = await client.POST("/api/v1/subscription-payments", {
+    const { data, error } = await client.POST("/v1/subscription-payments", {
       body: params,
     });
     return error ? err(error) : ok(data);
@@ -835,7 +835,7 @@ server.tool(
     notes: z.string().optional().describe("New notes"),
   },
   async ({ id, ...body }) => {
-    const { data, error } = await client.PUT("/api/v1/subscription-payments/{id}", {
+    const { data, error } = await client.PUT("/v1/subscription-payments/{id}", {
       params: { path: { id } },
       body,
     });
@@ -848,7 +848,7 @@ server.tool(
   "Permanently delete a payment record",
   { id: z.string().describe("Payment ID") },
   async ({ id }) => {
-    const { data, error } = await client.DELETE("/api/v1/subscription-payments/{id}", {
+    const { data, error } = await client.DELETE("/v1/subscription-payments/{id}", {
       params: { path: { id } },
     });
     return error ? err(error) : ok(data);

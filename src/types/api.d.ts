@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/api/v1/snippets": {
+    "/v1/snippets": {
         parameters: {
             query?: never;
             header?: never;
@@ -77,7 +77,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/snippets/{id}": {
+    "/v1/snippets/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -178,7 +178,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/nuggets": {
+    "/v1/nuggets": {
         parameters: {
             query?: never;
             header?: never;
@@ -249,7 +249,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/nuggets/{id}": {
+    "/v1/nuggets/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -341,7 +341,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/todos": {
+    "/v1/todos": {
         parameters: {
             query?: never;
             header?: never;
@@ -410,7 +410,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/todos/{id}": {
+    "/v1/todos/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -502,7 +502,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/ideas": {
+    "/v1/ideas": {
         parameters: {
             query?: never;
             header?: never;
@@ -571,7 +571,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/ideas/{id}": {
+    "/v1/ideas/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -663,7 +663,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/tools": {
+    "/v1/tools": {
         parameters: {
             query?: never;
             header?: never;
@@ -732,7 +732,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/tools/{id}": {
+    "/v1/tools/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -824,7 +824,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/repos": {
+    "/v1/repos": {
         parameters: {
             query?: never;
             header?: never;
@@ -893,7 +893,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/repos/{id}": {
+    "/v1/repos/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -985,7 +985,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/travel": {
+    "/v1/travel": {
         parameters: {
             query?: never;
             header?: never;
@@ -1058,7 +1058,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/travel/{id}": {
+    "/v1/travel/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1150,7 +1150,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/countries": {
+    "/v1/countries": {
         parameters: {
             query?: never;
             header?: never;
@@ -1196,7 +1196,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/countries/{id}": {
+    "/v1/countries/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1236,7 +1236,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/cities": {
+    "/v1/cities": {
         parameters: {
             query?: never;
             header?: never;
@@ -1282,7 +1282,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/cities/{id}": {
+    "/v1/cities/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1490,7 +1490,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/subscriptions": {
+    "/v1/subscriptions": {
         parameters: {
             query?: never;
             header?: never;
@@ -1582,7 +1582,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/subscriptions/{id}": {
+    "/v1/subscriptions/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1683,7 +1683,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/subscriptions/{id}/mark-paid": {
+    "/v1/subscriptions/{id}/mark-paid": {
         parameters: {
             query?: never;
             header?: never;
@@ -1736,7 +1736,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/subscriptions/{id}/backfill": {
+    "/v1/subscriptions/{id}/backfill": {
         parameters: {
             query?: never;
             header?: never;
@@ -1797,7 +1797,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/subscriptions/{id}/payments": {
+    "/v1/subscriptions/{id}/payments": {
         parameters: {
             query?: never;
             header?: never;
@@ -1843,7 +1843,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/subscription-payments": {
+    "/v1/subscription-payments": {
         parameters: {
             query?: never;
             header?: never;
@@ -1937,7 +1937,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/subscription-payments/{id}": {
+    "/v1/subscription-payments/{id}": {
         parameters: {
             query?: never;
             header?: never;
