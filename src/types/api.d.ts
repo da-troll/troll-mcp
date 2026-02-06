@@ -732,6 +732,69 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/tools/import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Import a tool from URL
+         * @description Import a tool by providing its URL. The API will automatically:
+         *     - Extract the tool name from the URL (if not provided)
+         *     - Fetch the webpage and extract its meta description (if description not provided)
+         *     - Create the tool entry
+         *
+         *     You can override the auto-detected name and description by providing them in the request body.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    /**
+                     * @example {
+                     *       "url": "https://vercel.com"
+                     *     }
+                     */
+                    "application/json": components["schemas"]["ToolImport"];
+                };
+            };
+            responses: {
+                /** @description Tool imported successfully */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ToolResponse"];
+                    };
+                };
+                /** @description Invalid URL or missing required fields */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                401: components["responses"]["Unauthorized"];
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/tools/{id}": {
         parameters: {
             query?: never;
@@ -885,6 +948,71 @@ export interface paths {
                         "application/json": components["schemas"]["RepoResponse"];
                     };
                 };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/repos/import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Import a repo from GitHub
+         * @description Import a repository from GitHub by providing its URL. The API will automatically:
+         *     - Fetch repository metadata (stars, forks, language, topics, etc.)
+         *     - Fetch the README content
+         *     - Create the repo entry with full GitHub data
+         *
+         *     **Prerequisites:**
+         *     - GitHub integration must be connected in Settings → Integrations
+         *     - The GitHub token must have access to the repository
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    /**
+                     * @example {
+                     *       "url": "https://github.com/vercel/next.js"
+                     *     }
+                     */
+                    "application/json": components["schemas"]["RepoImport"];
+                };
+            };
+            responses: {
+                /** @description Repository imported successfully */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["RepoImportResponse"];
+                    };
+                };
+                /** @description Invalid GitHub URL, GitHub integration not configured, or repository not found */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                401: components["responses"]["Unauthorized"];
             };
         };
         delete?: never;
@@ -2285,6 +2413,28 @@ export interface components {
             description?: string;
             rating?: number;
         };
+        ToolImport: {
+            /**
+             * Format: uri
+             * @description URL of the tool to import. Name and description will be auto-detected if not provided.
+             * @example https://vercel.com
+             */
+            url: string;
+            /**
+             * @description Override the auto-detected name
+             * @example Vercel
+             */
+            name?: string;
+            /** @description Override the auto-detected description */
+            description?: string;
+            /**
+             * @description Tool category
+             * @example Hosting
+             */
+            category?: string;
+            /** @description Rating from 1-5 */
+            rating?: number;
+        };
         ToolUpdate: {
             name?: string;
             url?: string;
@@ -2346,6 +2496,38 @@ export interface components {
              * @enum {string}
              */
             source_type: "github" | "manual";
+        };
+        RepoImport: {
+            /**
+             * Format: uri
+             * @description GitHub repository URL to import
+             * @example https://github.com/vercel/next.js
+             */
+            url: string;
+            /**
+             * @description Override the repository name
+             * @example Next.js
+             */
+            name?: string;
+            /**
+             * @description Whether to make the repo entry public
+             * @default true
+             */
+            is_public: boolean;
+        };
+        RepoImportResponse: {
+            /** @example true */
+            success?: boolean;
+            data?: {
+                success?: boolean;
+                /** @example Successfully imported repository "next.js" */
+                message?: string;
+                /** Format: uuid */
+                id?: string;
+                /** @example next.js */
+                name?: string;
+            };
+            meta?: components["schemas"]["ResponseMeta"];
         };
         RepoUpdate: {
             title?: string;

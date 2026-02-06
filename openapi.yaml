@@ -509,6 +509,41 @@ paths:
               schema:
                 $ref: '#/components/schemas/ToolResponse'
 
+  /v1/tools/import:
+    post:
+      tags: [Tools]
+      summary: Import a tool from URL
+      description: |
+        Import a tool by providing its URL. The API will automatically:
+        - Extract the tool name from the URL (if not provided)
+        - Fetch the webpage and extract its meta description (if description not provided)
+        - Create the tool entry
+
+        You can override the auto-detected name and description by providing them in the request body.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToolImport'
+            example:
+              url: "https://vercel.com"
+      responses:
+        '201':
+          description: Tool imported successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolResponse'
+        '400':
+          description: Invalid URL or missing required fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
   /v1/tools/{id}:
     get:
       tags: [Tools]
@@ -602,6 +637,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RepoResponse'
+
+  /v1/repos/import:
+    post:
+      tags: [Repos]
+      summary: Import a repo from GitHub
+      description: |
+        Import a repository from GitHub by providing its URL. The API will automatically:
+        - Fetch repository metadata (stars, forks, language, topics, etc.)
+        - Fetch the README content
+        - Create the repo entry with full GitHub data
+
+        **Prerequisites:**
+        - GitHub integration must be connected in Settings → Integrations
+        - The GitHub token must have access to the repository
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RepoImport'
+            example:
+              url: "https://github.com/vercel/next.js"
+      responses:
+        '201':
+          description: Repository imported successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RepoImportResponse'
+        '400':
+          description: Invalid GitHub URL, GitHub integration not configured, or repository not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
   /v1/repos/{id}:
     get:
@@ -1832,6 +1904,32 @@ components:
           minimum: 1
           maximum: 5
 
+    ToolImport:
+      type: object
+      required: [url]
+      properties:
+        url:
+          type: string
+          format: uri
+          description: URL of the tool to import. Name and description will be auto-detected if not provided.
+          example: "https://vercel.com"
+        name:
+          type: string
+          description: Override the auto-detected name
+          example: "Vercel"
+        description:
+          type: string
+          description: Override the auto-detected description
+        category:
+          type: string
+          description: Tool category
+          example: "Hosting"
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+          description: Rating from 1-5
+
     ToolUpdate:
       type: object
       properties:
@@ -1926,6 +2024,47 @@ components:
           type: string
           enum: [github, manual]
           default: manual
+
+    RepoImport:
+      type: object
+      required: [url]
+      properties:
+        url:
+          type: string
+          format: uri
+          description: GitHub repository URL to import
+          example: "https://github.com/vercel/next.js"
+        name:
+          type: string
+          description: Override the repository name
+          example: "Next.js"
+        is_public:
+          type: boolean
+          description: Whether to make the repo entry public
+          default: true
+
+    RepoImportResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            success:
+              type: boolean
+            message:
+              type: string
+              example: 'Successfully imported repository "next.js"'
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+              example: "next.js"
+        meta:
+          $ref: '#/components/schemas/ResponseMeta'
 
     RepoUpdate:
       type: object

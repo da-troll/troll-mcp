@@ -370,6 +370,24 @@ server.tool(
 );
 
 server.tool(
+  "import_tool",
+  "Import a software tool from a URL. Auto-detects name and description from the webpage.",
+  {
+    url: z.string().describe("URL of the tool to import"),
+    name: z.string().optional().describe("Override the auto-detected name"),
+    description: z.string().optional().describe("Override the auto-detected description"),
+    category: z.string().optional().describe("Tool category"),
+    rating: z.number().optional().describe("Rating (1-5)"),
+  },
+  async (params) => {
+    const { data, error } = await client.POST("/v1/tools/import", {
+      body: params,
+    });
+    return error ? err(error) : ok(data);
+  },
+);
+
+server.tool(
   "update_tool",
   "Update an existing software tool entry",
   {
@@ -441,6 +459,22 @@ server.tool(
   },
   async (params) => {
     const { data, error } = await client.POST("/v1/repos", {
+      body: params,
+    });
+    return error ? err(error) : ok(data);
+  },
+);
+
+server.tool(
+  "import_repo",
+  "Import a repository from GitHub by URL. Auto-fetches metadata, stars, language, topics, and README content. Requires GitHub integration to be connected.",
+  {
+    url: z.string().describe("GitHub repository URL (e.g. https://github.com/vercel/next.js)"),
+    name: z.string().optional().describe("Override the repository name"),
+    is_public: z.boolean().default(true).describe("Whether to make the repo entry public (defaults to true)"),
+  },
+  async (params) => {
+    const { data, error } = await client.POST("/v1/repos/import", {
       body: params,
     });
     return error ? err(error) : ok(data);
