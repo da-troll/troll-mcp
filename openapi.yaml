@@ -2415,6 +2415,12 @@ components:
         cancelled_at:
           type: string
           format: date-time
+        notes:
+          type: string
+          nullable: true
+          maxLength: 1000
+          description: Freeform notes — bundles, cancellation reminders, sharing, etc.
+          example: "Bundled with Incogni + Dedicated IP add-on"
         created_at:
           type: string
           format: date-time
@@ -2453,6 +2459,11 @@ components:
           type: string
           enum: [personal, work]
           default: personal
+        notes:
+          type: string
+          nullable: true
+          maxLength: 1000
+          description: Freeform notes — bundles, cancellation reminders, sharing, etc.
 
     SubscriptionUpdate:
       type: object
@@ -2482,6 +2493,11 @@ components:
         status:
           type: string
           enum: [active, cancelled]
+        notes:
+          type: string
+          nullable: true
+          maxLength: 1000
+          description: Freeform notes — bundles, cancellation reminders, sharing, etc.
 
     SubscriptionResponse:
       type: object
@@ -2510,6 +2526,18 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Subscription'
+            summary:
+              type: object
+              description: Aggregates over ALL active subscriptions, regardless of any filter applied to items.
+              properties:
+                monthly_totals:
+                  type: object
+                  description: Monthly-cost equivalent grouped by currency (yearly subs are divided by 12). No FX conversion.
+                  additionalProperties:
+                    type: number
+                  example:
+                    NOK: 856.25
+                    USD: 63.54
         meta:
           $ref: '#/components/schemas/ResponseMeta'
 
