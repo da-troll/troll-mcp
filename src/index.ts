@@ -708,6 +708,7 @@ server.tool(
     next_billing_date: z.string().optional().describe("Next billing date (YYYY-MM-DD)"),
     payment_method: z.string().optional().describe("Payment method"),
     usage_type: z.enum(["personal", "work"]).describe("Usage type"),
+    notes: z.string().max(1000).nullable().optional().describe("Freeform notes (bundles, reminders, etc.)"),
   },
   async (params) => {
     const { data, error } = await client.POST("/v1/subscriptions", {
@@ -732,6 +733,7 @@ server.tool(
     payment_method: z.string().optional().describe("New payment method"),
     usage_type: z.enum(["personal", "work"]).optional().describe("New usage type"),
     status: z.enum(["active", "cancelled"]).optional().describe("New status"),
+    notes: z.string().max(1000).nullable().optional().describe("Freeform notes; pass null to clear"),
   },
   async ({ id, ...body }) => {
     const { data, error } = await client.PUT("/v1/subscriptions/{id}", {

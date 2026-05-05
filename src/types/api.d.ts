@@ -2755,6 +2755,11 @@ export interface components {
             status?: "active" | "cancelled";
             /** Format: date-time */
             cancelled_at?: string;
+            /**
+             * @description Freeform notes — bundles, cancellation reminders, sharing, etc.
+             * @example Bundled with Incogni + Dedicated IP add-on
+             */
+            notes?: string | null;
             /** Format: date-time */
             created_at?: string;
             /** Format: date-time */
@@ -2781,6 +2786,8 @@ export interface components {
              * @enum {string}
              */
             usage_type: "personal" | "work";
+            /** @description Freeform notes — bundles, cancellation reminders, sharing, etc. */
+            notes?: string | null;
         };
         SubscriptionUpdate: {
             name?: string;
@@ -2798,6 +2805,8 @@ export interface components {
             usage_type?: "personal" | "work";
             /** @enum {string} */
             status?: "active" | "cancelled";
+            /** @description Freeform notes — bundles, cancellation reminders, sharing, etc. */
+            notes?: string | null;
         };
         SubscriptionResponse: {
             success?: boolean;
@@ -2811,6 +2820,19 @@ export interface components {
             data?: {
                 count?: number;
                 items?: components["schemas"]["Subscription"][];
+                /** @description Aggregates over ALL active subscriptions, regardless of any filter applied to items. */
+                summary?: {
+                    /**
+                     * @description Monthly-cost equivalent grouped by currency (yearly subs are divided by 12). No FX conversion.
+                     * @example {
+                     *       "NOK": 856.25,
+                     *       "USD": 63.54
+                     *     }
+                     */
+                    monthly_totals?: {
+                        [key: string]: number;
+                    };
+                };
             };
             meta?: components["schemas"]["ResponseMeta"];
         };
