@@ -1543,7 +1543,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/agent": {
+    "/agent/chat": {
         parameters: {
             query?: never;
             header?: never;
@@ -1560,8 +1560,6 @@ export interface paths {
          *     - "Create a snippet for React hooks"
          *     - "Add France as a country I want to visit"
          *     - "Delete my old Python notes"
-         *
-         *     **Note:** This endpoint uses a different server URL than the REST API.
          */
         post: {
             parameters: {
@@ -1577,7 +1575,7 @@ export interface paths {
                          * @description Natural language request
                          * @example Create a new snippet called 'React Hooks' with some example code
                          */
-                        message: string;
+                        prompt: string;
                     };
                 };
             };
@@ -1591,19 +1589,18 @@ export interface paths {
                         "application/json": {
                             /** @example true */
                             success?: boolean;
-                            data?: {
-                                /**
-                                 * @description Agent's natural language response
-                                 * @example I've created a new snippet called 'React Hooks'. You can find it in your Snippets page.
-                                 */
-                                response?: string;
-                                /** @description Actions performed by the agent */
-                                actions?: {
-                                    /** @example createSnippet */
-                                    tool?: string;
-                                    result?: Record<string, never>;
-                                }[];
-                            };
+                            /**
+                             * @description Agent's natural language response
+                             * @example I've created a new snippet called 'React Hooks'. You can find it in your Snippets page.
+                             */
+                            response?: string;
+                            /** @description Actions performed by the agent */
+                            actions?: {
+                                /** @example createSnippet */
+                                tool?: string;
+                                args?: Record<string, never>;
+                                result?: Record<string, never>;
+                            }[];
                             meta?: components["schemas"]["ResponseMeta"];
                         };
                     };

@@ -10,9 +10,13 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "generate-types": "openapi-typescript openapi.yaml -o src/types/api.d.ts"
+    "generate-types": "openapi-typescript openapi.yaml -o src/types/api.d.ts",
+    "test:live": "node scripts/test-live-contract.mjs"
   },
-  "keywords": ["mcp", "trollspace"],
+  "keywords": [
+    "mcp",
+    "trollspace"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {

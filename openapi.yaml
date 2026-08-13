@@ -39,8 +39,6 @@ info:
 servers:
   - url: https://api.trollefsen.com
     description: REST API
-  - url: https://api.trollefsen.com/agent
-    description: Agent API (natural language)
   - url: https://api.trollefsen.com/upload
     description: File Upload API
 
@@ -1002,9 +1000,14 @@ paths:
           $ref: '#/components/responses/RateLimited'
 
   # ============================================
-  # AGENT (different server)
+  # AGENT
   # ============================================
-  /agent:
+  # HIVE-275: brought in line with the LIVE contract (verified 2026-08-13).
+  # The deployed api-proxy worker only routes slash-suffixed prefixes (bare
+  # /agent 404s), and the agent function serves POST /chat taking { prompt }.
+  # The old bare-/agent + { message } + nested data{} shape was stale and is
+  # why agent_query 404'd for 8+ days (HIVE-240).
+  /agent/chat:
     post:
       tags: [Agent]
       summary: Natural language API
@@ -1015,19 +1018,15 @@ paths:
         - "Create a snippet for React hooks"
         - "Add France as a country I want to visit"
         - "Delete my old Python notes"
-
-        **Note:** This endpoint uses a different server URL than the REST API.
-      servers:
-        - url: https://api.trollefsen.com/agent
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: object
-              required: [message]
+              required: [prompt]
               properties:
-                message:
+                prompt:
                   type: string
                   description: Natural language request
                   example: "Create a new snippet called 'React Hooks' with some example code"
@@ -1042,24 +1041,23 @@ paths:
                   success:
                     type: boolean
                     example: true
-                  data:
-                    type: object
-                    properties:
-                      response:
-                        type: string
-                        description: Agent's natural language response
-                        example: "I've created a new snippet called 'React Hooks'. You can find it in your Snippets page."
-                      actions:
-                        type: array
-                        description: Actions performed by the agent
-                        items:
+                  response:
+                    type: string
+                    description: Agent's natural language response
+                    example: "I've created a new snippet called 'React Hooks'. You can find it in your Snippets page."
+                  actions:
+                    type: array
+                    description: Actions performed by the agent
+                    items:
+                      type: object
+                      properties:
+                        tool:
+                          type: string
+                          example: "createSnippet"
+                        args:
                           type: object
-                          properties:
-                            tool:
-                              type: string
-                              example: "createSnippet"
-                            result:
-                              type: object
+                        result:
+                          type: object
                   meta:
                     $ref: '#/components/schemas/ResponseMeta'
         '400':
