@@ -3,7 +3,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { agentChat, client } from "./client.js";
+import { client } from "./client.js";
 
 const server = new McpServer({
   name: "trollspace",
@@ -902,8 +902,13 @@ server.tool(
     message: z.string().describe("Natural language request (e.g. 'Add France as a country I want to visit')"),
   },
   async ({ message }) => {
-    const { ok: success, data } = await agentChat(message);
-    return success ? ok(data) : err(data);
+    // HIVE-275: the live route is /agent/chat with a `prompt` field — the
+    // spec (openapi.yaml) now matches the deployed contract; keep it that way.
+    // scripts/test-live-contract.mjs fails if the live route or field drifts.
+    const { data, error } = await client.POST("/agent/chat", {
+      body: { prompt: message },
+    });
+    return error ? err(error) : ok(data);
   },
 );
 
