@@ -3,7 +3,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { client } from "./client.js";
+import { agentChat, client } from "./client.js";
 
 const server = new McpServer({
   name: "trollspace",
@@ -902,10 +902,8 @@ server.tool(
     message: z.string().describe("Natural language request (e.g. 'Add France as a country I want to visit')"),
   },
   async ({ message }) => {
-    const { data, error } = await client.POST("/agent", {
-      body: { message },
-    });
-    return error ? err(error) : ok(data);
+    const { ok: success, data } = await agentChat(message);
+    return success ? ok(data) : err(data);
   },
 );
 
