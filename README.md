@@ -24,6 +24,7 @@ Set your API key as an environment variable:
 
 ```bash
 export TROLLSPACE_API_KEY="troll_usr_your_key_here"
+# Household box: no raw key; run through Agent Vault with scripts/run-via-vault.sh (HIVE-1433)
 ```
 
 ### Usage with Claude Desktop

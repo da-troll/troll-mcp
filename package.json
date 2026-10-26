@@ -11,7 +11,7 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "generate-types": "openapi-typescript openapi.yaml -o src/types/api.d.ts",
-    "test:live": "node scripts/test-live-contract.mjs"
+    "test:live": "BRIDGE_AGENT_ID=${BRIDGE_AGENT_ID:-wilson} CONTRACT_PROBES=auth scripts/run-via-vault.sh node scripts/test-live-contract.mjs && CONTRACT_PROBES=unauth node scripts/test-live-contract.mjs"
   },
   "keywords": [
     "mcp",

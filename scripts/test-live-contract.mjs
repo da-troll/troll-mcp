@@ -25,14 +25,22 @@
  * `prompt`.
  *
  * Usage: TROLLSPACE_API_KEY=... node scripts/test-live-contract.mjs
+ * Through Agent Vault (HIVE-1433) the proxy authenticates EVERY request to the host,
+ * so run the halves separately: CONTRACT_PROBES=auth under scripts/run-via-vault.sh,
+ * CONTRACT_PROBES=unauth without it. Default "all" = both, with a raw key.
  * Exit: 0 = live contract matches; 1 = drift detected (details on stdout).
  */
 
 const BASE = "https://api.trollefsen.com";
 const ROUTE = "/agent/chat";
 const API_KEY = process.env.TROLLSPACE_API_KEY;
+const PROBES = process.env.CONTRACT_PROBES ?? "all";
+if (!["all", "auth", "unauth"].includes(PROBES)) {
+  console.error(`CONTRACT_PROBES must be all, auth or unauth (got ${PROBES})`);
+  process.exit(1);
+}
 
-if (!API_KEY) {
+if (!API_KEY && PROBES !== "unauth") {
   console.error("TROLLSPACE_API_KEY environment variable is required");
   process.exit(1);
 }
@@ -66,6 +74,7 @@ function expect(result, wantStatus, wantSubstring) {
 
 // 1. Route + handler contract: empty body must 400 with an error naming `prompt`.
 //    404 here = worker routing regressed (the HIVE-240 failure shape).
+if (PROBES !== "unauth") {
 expect(await probe("empty body", { auth: true, body: {} }), 400, "prompt");
 
 // 2. Regression to the pre-fix contract: the old `message` field must NOT be
@@ -76,10 +85,13 @@ expect(
   400,
   "prompt",
 );
+}
 
 // 3. Auth layer + routing discrimination: unauthenticated must 401 (routed,
 //    rejected by auth) — NOT 404 (would mean the route itself is gone).
-expect(await probe("unauthenticated", { auth: false, body: {} }), 401);
+if (PROBES !== "auth") {
+  expect(await probe("unauthenticated", { auth: false, body: {} }), 401);
+}
 
 if (failures.length) {
   console.log(`\nLIVE CONTRACT DRIFT (${failures.length}):`);
